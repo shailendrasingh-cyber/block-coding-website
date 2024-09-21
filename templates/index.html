@@ -1,0 +1,186 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockly with Python</title>
+    <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Blockly Python Demo</h1>
+    <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+    <button onclick="runPythonCode()">Run Code</button>
+    <pre id="output"></pre>
+
+    <xml id="toolbox" style="display: none">
+        <block type="controls_if"></block>
+        <block type="controls_repeat_ext"></block>
+        <block type="math_number"></block>
+        <block type="math_arithmetic"></block>
+        <block type="text"></block>
+        <block type="text_print"></block>
+    </xml>
+
+    <script>
+        // Initialize Blockly workspace
+        var workspace = Blockly.inject('blocklyDiv', {
+            toolbox: document.getElementById('toolbox')
+        });
+
+        // Function to run the generated Python code
+        function runPythonCode() {
+            // Get the generated Python code from Blockly
+            var code = Blockly.Python.workspaceToCode(workspace);
+
+            // Send the code to the Flask backend
+            fetch('/run_code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: code })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').textContent = data.output;
+            });
+        }
+    </script>
+
+    <script src="https://unpkg.com/blockly/python.js"></script>
+</body>
+</html> -->
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockly with Python</title>
+    <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <link rel="stylesheet" href="/static/blockly/styles.css">
+</head>
+<body>
+    <h1>Blockly Python Demo</h1>
+    
+    
+    <div id="blocklyDiv" style="height: 480px; width: 600px; float: left;"></div>
+
+    
+    <div style="margin-left: 620px;">
+        <h2>Output:</h2>
+        <div id="outputBlock" style="border: 1px solid #ccc; padding: 10px; width: 300px; height: 150px; overflow-y: auto; background-color: #f0f0f0;"></div>
+    </div>
+
+    <button onclick="runPythonCode()">Run Code</button>
+
+    
+    <xml id="toolbox" style="display: none">
+        <block type="controls_if"></block>
+        <block type="controls_repeat_ext"></block>
+        <block type="math_number"></block>
+        <block type="math_arithmetic"></block>
+        <block type="text"></block>
+        <block type="text_print"></block>
+    </xml>
+
+    <script>
+        
+        var workspace = Blockly.inject('blocklyDiv', {
+            toolbox: document.getElementById('toolbox')
+        });
+
+        
+        function runPythonCode() {
+            var code = Blockly.Python.workspaceToCode(workspace);
+            
+            
+            fetch('/run_code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: code })
+            })
+            .then(response => response.json())
+            .then(data => {
+                
+                document.getElementById('outputBlock').textContent = data.output;
+            })
+            .catch(error => {
+                
+                console.error('Error:', error);
+                document.getElementById('outputBlock').textContent = 'Error running the code!';
+            });
+        }
+    </script>
+
+    <script src="https://unpkg.com/blockly/python.js"></script>
+    <script src="/static/blockly/custom_blocks.js"></script>
+
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockly with Python</title>
+    <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <script src="https://unpkg.com/blockly/python.js"></script> <!-- Make sure Blockly Python is loaded first -->
+    <link rel="stylesheet" href="/static/blockly/styles.css">
+</head>
+<body>
+    <h1>Blockly Python Demo</h1>
+    
+    <div id="blocklyDiv" style="height: 480px; width: 600px; float: left;"></div>
+
+    <div style="margin-left: 620px;">
+        <h2>Output:</h2>
+        <div id="outputBlock" style="border: 1px solid #ccc; padding: 10px; width: 300px; height: 150px; overflow-y: auto; background-color: #f0f0f0;"></div>
+    </div>
+
+    <button onclick="runPythonCode()">Run Code</button>
+
+    <xml id="toolbox" style="display: none">
+        <block type="controls_if"></block>
+        <block type="controls_repeat_ext"></block>
+        <block type="math_number"></block>
+        <block type="math_arithmetic"></block>
+        <block type="text"></block>
+        <block type="text_print"></block>
+        <!-- You can add more blocks here -->
+    </xml>
+
+    <script>
+        // Initialize the Blockly workspace with a toolbox
+        var workspace = Blockly.inject('blocklyDiv', {
+            toolbox: document.getElementById('toolbox')
+        });
+
+        // Function to run the generated Python code
+        function runPythonCode() {
+            var code = Blockly.Python.workspaceToCode(workspace); // Make sure Blockly.Python is defined
+            
+            // Send the generated code to Flask for execution
+            fetch('/run_code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: code })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the output in the output block
+                document.getElementById('outputBlock').textContent = data.output;
+            })
+            .catch(error => {
+                // Display any errors encountered
+                console.error('Error:', error);
+                document.getElementById('outputBlock').textContent = 'Error running the code!';
+            });
+        }
+    </script>
+</body>
+</html>
